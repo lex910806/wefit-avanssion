@@ -26,6 +26,10 @@ class MatchController: BaseListController, UICollectionViewDelegateFlowLayout, M
         }
     }
     
+    func matchCellDidTap(decline match: Match) {
+        guard let token = globalToken, let id = Jwt.decode(token)["id"] as? Int else { return }
+        MatchService.clearRecentMatch(myId: String(id), match: match)
+    }
     
     let recordCellId = "recordCellId"
     let matchCellId = "matchCellId"

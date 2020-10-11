@@ -34,10 +34,11 @@ struct MatchService {
                 let dictionary = document.data()
                 let match = Match(dictionary)
                 matches.append(match)
-                completion(matches)
             })
+            completion(matches)
         }
     }
+    
     static func increaseValue(myId: String, match: Match, value: Int) {
         if String(match.fromId) == myId {
             COLLECTION_DURINGMATCH.document(match.matchId).updateData(["myValue":value])
@@ -46,14 +47,24 @@ struct MatchService {
         }
     }
 
-    static func matchRoomEnter(myId: String, match: Match, completion: @escaping(Bool, DuringMatch, Error?) -> Void) {
-        COLLECTION_MATCH.document(String(myId))
+    static func clearRecentMatch(myId: String, match: Match) {
+        COLLECTION_MATCH.document(String(match.toId))
             .collection("recent-match")
             .whereField("matchId", in: [match.matchId])
             .getDocuments { (snapshot, err) in
                 snapshot?.documents.forEach { $0.reference.delete() }
             }
-            
+        
+        COLLECTION_MATCH.document(String(match.fromId))
+            .collection("recent-match")
+            .whereField("matchId", in: [match.matchId])
+            .getDocuments { (snapshot, err) in
+                snapshot?.documents.forEach { $0.reference.delete() }
+            }
+        
+    }
+    static func matchRoomEnter(myId: String, match: Match, completion: @escaping(Bool, DuringMatch, Error?) -> Void) {
+        clearRecentMatch(myId: myId, match: match)
         
         let query = COLLECTION_DURINGMATCH.document(match.matchId)
         query.addSnapshotListener { (snapshot, error) in

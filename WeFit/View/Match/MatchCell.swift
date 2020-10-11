@@ -9,6 +9,7 @@ import UIKit
 
 protocol MatchCellDelegate: class {
     func matchCellDidTap(accept match: Match)
+    func matchCellDidTap(decline match: Match)
 }
 class MatchCell: UICollectionViewCell {
     weak var delegate: MatchCellDelegate?
@@ -35,6 +36,9 @@ class MatchCell: UICollectionViewCell {
     let declineBtn = UIButton(title: "Decline")
     let acceptBtn = UIButton(title: "Accept")
     
+    @objc func declineHandler() {
+        delegate?.matchCellDidTap(decline: match)
+    }
     @objc func accentHandler() {
         delegate?.matchCellDidTap(accept: match)
     }
@@ -54,6 +58,7 @@ class MatchCell: UICollectionViewCell {
         declineBtn.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         acceptBtn.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         acceptBtn.addTarget(self, action: #selector(accentHandler), for: .touchUpInside)
+        declineBtn.addTarget(self, action: #selector(declineHandler), for: .touchUpInside)
         declineBtn.setTitleColor(.white, for: .normal)
         acceptBtn.setTitleColor(.white, for: .normal)
         label.constrainHeight(constant: 60)
