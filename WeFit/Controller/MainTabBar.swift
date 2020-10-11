@@ -32,7 +32,7 @@ class MainTabBar: UITabBarController {
             createNavController(viewController: ActivityController(), title: "Activity", imageName: "activity"),
             createNavController(viewController: MatchController(), title: "Match", imageName: "match"),
             createNavController(viewController: SocialViewController(), title: "Social", imageName: "social"),
-            createNavController(viewController: ProfileController(), title: "Profile", imageName: "mypage"),
+            createNavController(viewController: MyPageController(), title: "Profile", imageName: "mypage"),
         ]
     }
     
