@@ -67,6 +67,8 @@
 		E9B0BE72253107D4006E7821 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B0BE71253107D4006E7821 /* TrainingViewController.swift */; };
 		E9B0BE7925310841006E7821 /* GuideContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B0BE7825310841006E7821 /* GuideContainerCell.swift */; };
 		E9B0BE9425310D2D006E7821 /* SocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B0BE9325310D2D006E7821 /* SocialViewController.swift */; };
+		E9B3E430253294DF00979B90 /* CalorieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E42F253294DF00979B90 /* CalorieSearchViewController.swift */; };
+		E9B3E4332532955200979B90 /* CalorieSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E4322532955200979B90 /* CalorieSearchResult.swift */; };
 		E9B84369253005150015FD96 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B84368253005150015FD96 /* ChatViewController.swift */; };
 		E9B8436C253005610015FD96 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B8436B253005610015FD96 /* MessageCell.swift */; };
 		E9B8436F2530057E0015FD96 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B8436E2530057E0015FD96 /* MessageViewModel.swift */; };
@@ -160,6 +162,8 @@
 		E9B0BE71253107D4006E7821 /* TrainingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		E9B0BE7825310841006E7821 /* GuideContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideContainerCell.swift; sourceTree = "<group>"; };
 		E9B0BE9325310D2D006E7821 /* SocialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewController.swift; sourceTree = "<group>"; };
+		E9B3E42F253294DF00979B90 /* CalorieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieSearchViewController.swift; sourceTree = "<group>"; };
+		E9B3E4322532955200979B90 /* CalorieSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieSearchResult.swift; sourceTree = "<group>"; };
 		E9B84368253005150015FD96 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E9B8436B253005610015FD96 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		E9B8436E2530057E0015FD96 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
@@ -390,6 +394,7 @@
 				E9B8437A25302F130015FD96 /* Record.swift */,
 				E941E4D1253232E900B20B52 /* DuringMatch.swift */,
 				E9B8438325304D4D0015FD96 /* Match.swift */,
+				E9B3E4322532955200979B90 /* CalorieSearchResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -458,6 +463,7 @@
 			children = (
 				E988C3762532816C000C39E9 /* MyPageBMICalculatorViewController.swift */,
 				E988C3772532816C000C39E9 /* BMIInputView.swift */,
+				E9B3E42F253294DF00979B90 /* CalorieSearchViewController.swift */,
 			);
 			path = BMI;
 			sourceTree = "<group>";
@@ -650,6 +656,7 @@
 				E988C3812532817A000C39E9 /* MyPageHeaderView.swift in Sources */,
 				E9E7EAB525308C71009AA5D3 /* MatchCell.swift in Sources */,
 				E9E7EAA3253083B8009AA5D3 /* RegisterViewModel.swift in Sources */,
+				E9B3E430253294DF00979B90 /* CalorieSearchViewController.swift in Sources */,
 				FF9D59AE25319D950012C7F4 /* AnalysisController.swift in Sources */,
 				E9B8436C253005610015FD96 /* MessageCell.swift in Sources */,
 				FF9D59B125319DC10012C7F4 /* DailyActivityContainerCell.swift in Sources */,
@@ -679,6 +686,7 @@
 				E96D8022253191FD000BCD10 /* FriendService.swift in Sources */,
 				E956B3F0252F459F0068B094 /* ActivityController.swift in Sources */,
 				E988C3792532816C000C39E9 /* MyPageBMICalculatorViewController.swift in Sources */,
+				E9B3E4332532955200979B90 /* CalorieSearchResult.swift in Sources */,
 				E93EE99A2530EEC4003A3226 /* BottomSheetNavigationController.swift in Sources */,
 				FF9D59A0253188730012C7F4 /* ExerciseViewController.swift in Sources */,
 				E9E7EAC72530C78E009AA5D3 /* SetupMatchViewController.swift in Sources */,

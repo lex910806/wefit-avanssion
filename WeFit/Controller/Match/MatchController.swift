@@ -11,15 +11,20 @@ class MatchController: BaseListController, UICollectionViewDelegateFlowLayout, M
     
     func matchCellDidTap(accept match: Match) {
         guard let token = globalToken, let id = Jwt.decode(token)["id"] as? Int else { return }
-        MatchService.matchRoomEnter(myId: String(id), match: match) { (canStart, err) in
+        MatchService.matchRoomEnter(myId: String(id), match: match) { (canStart, duringMatch, err) in
             if canStart {
                 guard let token = globalToken, let id = Jwt.decode(token)["id"] as? Int else { return }
                 ChatService.fetchUser(withUid: String(id)) { (my) in
-                    let setupVC = SetupMatchViewController(me: my)
-                    setupVC.modalPresentationStyle = .fullScreen
-                    setupVC.modalTransitionStyle = .crossDissolve
-                    setupVC.setupState(.counter)
-                    self.present(setupVC, animated: true)
+                    ChatService.fetchUser(withUid: String(match.fromId)) { opponent in
+                        let setupVC = SetupMatchViewController(me: my)
+                        setupVC.opponent = FriendListViewModel(id: opponent.id, email: opponent.email, nickName: opponent.nickName, avatar_url: opponent.avatar)
+                        setupVC.modalPresentationStyle = .fullScreen
+                        setupVC.modalTransitionStyle = .crossDissolve
+                        setupVC.match = match
+                        setupVC.setupLoadingState()
+                        setupVC.setupCounterState()
+                        self.present(setupVC, animated: true)
+                    }
                 }
             }
         }

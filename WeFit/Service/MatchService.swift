@@ -38,8 +38,15 @@ struct MatchService {
             })
         }
     }
-    
-    static func matchRoomEnter(myId: String, match: Match, completion: @escaping(Bool, Error?) -> Void) {
+    static func increaseValue(myId: String, match: Match, value: Int) {
+        if String(match.fromId) == myId {
+            COLLECTION_DURINGMATCH.document(match.matchId).updateData(["myValue":value])
+        } else {
+            COLLECTION_DURINGMATCH.document(match.matchId).updateData(["opponentValue":value])
+        }
+    }
+
+    static func matchRoomEnter(myId: String, match: Match, completion: @escaping(Bool, DuringMatch, Error?) -> Void) {
         
         let query = COLLECTION_DURINGMATCH.document(match.matchId)
         query.addSnapshotListener { (snapshot, error) in
@@ -49,20 +56,19 @@ struct MatchService {
                 
                 if duringMatch.myId == myId {
                     COLLECTION_DURINGMATCH.document(match.matchId).updateData(["amIOnline": true])
-                    completion(duringMatch.isOpponentOnline, nil)
+                    completion(duringMatch.isOpponentOnline,duringMatch, nil)
                     
                 } else {
                     COLLECTION_DURINGMATCH.document(match.matchId).updateData(["isOpponentOnline": true])
-                    completion(duringMatch.amIOnline, nil)
+                    completion(duringMatch.amIOnline,duringMatch, nil)
                 }
             }
         }
     }
     
-    static func matchRoomExit(myId: String, match: Match, completion: @escaping(Error?) -> Void) {
+    static func leaveMatchRoom(myId: String, match: Match, completion: @escaping(Error?) -> Void) {
         
-        let query = COLLECTION_DURINGMATCH.document(match.matchId)
-        query.addSnapshotListener { (snapshot, error) in
+        COLLECTION_DURINGMATCH.document(match.matchId).getDocument { (snapshot, error) in
             if let dictionary = snapshot?.data() {
                 
                 let duringMatch = DuringMatch(dictionary)

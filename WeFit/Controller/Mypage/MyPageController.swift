@@ -81,6 +81,8 @@ class MyPageController: UIViewController {
 
     @objc
     private func onSettings() {
-        print("onSettings")
+        let calorieSearchController = CalorieSearchViewController()
+        calorieSearchController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(calorieSearchController, animated: true)
     }
 }

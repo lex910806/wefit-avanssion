@@ -96,7 +96,10 @@ class SetupMatchViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 52).boldItalic
         label.textColor = .white
-        label.text = "Waiting for opponent.."
+        label.numberOfLines = 2
+        label.text = "Opponent\nwaiting.."
+        label.textAlignment = .center
+
         label.isHidden = true
         return label
     }()
@@ -156,7 +159,7 @@ class SetupMatchViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.textColor = .white
         label.isHidden = true
-        label.text = "Score"
+        label.text = "Reps"
         return label
     }()
 
@@ -189,7 +192,7 @@ class SetupMatchViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         label.textColor = .white
         label.isHidden = true
-        label.text = "My Score"
+        label.text = "My Reps"
         return label
     }()
 
@@ -212,9 +215,19 @@ class SetupMatchViewController: UIViewController {
         button.setDimensions(height: 60, width: 143)
         button.layer.cornerRadius = 60 / 2
         button.setTitle("Give up", for: .normal)
+        button.addTarget(self, action: #selector(giveUpHandler), for: .touchUpInside)
         return button
     }()
 
+    @objc func giveUpHandler() {
+        if self.state == .contest {
+            guard let match = match else { return }
+//            MatchService.leaveMatchRoom(myId: String(currentUser.id), match: match) { _ in
+//                self.state = .result
+//            }
+        }
+    }
+    
     enum State {
         case initial
         case loading
@@ -248,13 +261,47 @@ class SetupMatchViewController: UIViewController {
     @objc func closeVC() {
         self.dismiss(animated: true)
     }
+    var match: Match?
+    func challengeStart() {
+        guard let opponentId = opponent?.id else {
+            setupState(.initial)
+            return
+        }
+        ChatService.fetchUser(withUid: String(opponentId)) { opponentUser in
+            let matchId = MatchService.challengeMatch(exercise: self.exercise.rawValue,
+                                        name: self.currentUser.nickName,
+                                        user: opponentUser) { _ in }
+            
+            let data = ["exercise": self.exercise.rawValue,
+                        "fromName": self.currentUser.nickName,
+                        "fromId": String(self.currentUser.id),
+                        "toId": String(opponentId),
+                        "timestamp": Timestamp(date: Date()),
+                        "matchId": matchId] as [String: Any]
+            
+            self.match = Match(data)
+            MatchService.matchRoomEnter(myId: String(self.currentUser.id), match: self.match!) { (canStart, duringInfo, err) in
+                if canStart {
+                    
+                    if self.state != .contest {
+                        self.state = .counter
+                    }
+                    self.workoutCounterLabel.text = "\(duringInfo.myValue)"
+                    self.contestOpponentScoreCountLabel.text = "\(duringInfo.opponentValue)"
+                } else {
+                    self.state = .result
+                }
+            }
+        }
+    }
 
-    func setupState(_ state: State) {
+    private func setupState(_ state: State) {
         switch state {
         case .initial:
             setupInitialState()
         case .loading:
             setupLoadingState()
+            challengeStart()
         case .counter:
             setupCounterState()
         case .contest:
@@ -264,7 +311,7 @@ class SetupMatchViewController: UIViewController {
         }
     }
 
-    private func setupInitialState() {
+    public func setupInitialState() {
         //MARK: Close btn
         closeBtn.setDimensions(height: 40, width: 40)
         closeBtn.setImage(UIImage(named: "close"), for: .normal)
@@ -301,7 +348,7 @@ class SetupMatchViewController: UIViewController {
         startMatchBtn.addTarget(self, action: #selector(onStartMatch), for: .touchUpInside)
     }
 
-    private func setupLoadingState() {
+    public func setupLoadingState() {
         guard let opponentId = opponent?.id else {
             setupState(.initial)
             return
@@ -340,26 +387,40 @@ class SetupMatchViewController: UIViewController {
             workoutTag.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         workoutTag.setTitle(exercise.name(), for: .normal)
-        
-        
-        ChatService.fetchUser(withUid: String(opponentId)) { opponentUser in
-            let matchId = MatchService.challengeMatch(exercise: self.exercise.rawValue,
-                                        name: self.currentUser.nickName,
-                                        user: opponentUser) { _ in }
-            
-            let data = ["exercise": self.exercise.rawValue,
-                        "fromName": self.currentUser.nickName,
-                        "fromId": String(self.currentUser.id),
-                        "toId": String(opponentId),
-                        "timestamp": Timestamp(date: Date()),
-                        "matchId": matchId] as [String: Any]
-            
-            MatchService.matchRoomEnter(myId: String(self.currentUser.id), match: Match(data)) { (canStart, err) in
-                if canStart {
-                    self.setupState(.counter)
-                }
-            }
+        let img = UIImage(named: "person")
+        battleUserImageView.image = img
+        battleOpponentImageView.image = img
+        if let url = currentUser.avatarUrl {
+            battleUserImageView.sd_setImage(with: url)
         }
+        //                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        //            guard let strongSelf = self else { return }
+        //            strongSelf.setupState(.counter)
+        //        }
+        if let urlStr = opponent?.avatar_url, let url = URL(string: urlStr) {
+            battleOpponentImageView.sd_setImage(with: url)
+        }
+        workoutTag.setTitle(exercise.name(), for: .normal)
+
+        
+//        ChatService.fetchUser(withUid: String(opponentId)) { opponentUser in
+//            let matchId = MatchService.challengeMatch(exercise: self.exercise.rawValue,
+//                                        name: self.currentUser.nickName,
+//                                        user: opponentUser) { _ in }
+//
+//            let data = ["exercise": self.exercise.rawValue,
+//                        "fromName": self.currentUser.nickName,
+//                        "fromId": String(self.currentUser.id),
+//                        "toId": String(opponentId),
+//                        "timestamp": Timestamp(date: Date()),
+//                        "matchId": matchId] as [String: Any]
+//
+//            MatchService.matchRoomEnter(myId: String(self.currentUser.id), match: Match(data)) { (canStart, duringMatch, err) in
+//                if canStart {
+//                    self.state = .counter
+//                }
+//            }
+//        }
         
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
 //            guard let strongSelf = self else { return }
@@ -367,7 +428,7 @@ class SetupMatchViewController: UIViewController {
 //        }
     }
 
-    private func setupCounterState() {
+    public func setupCounterState() {
         [loadingLabel].forEach { $0.isHidden = true }
         [counterLabel, counterDetailLabel].forEach { $0.isHidden = false }
         view.addSubview(counterLabel)
@@ -399,7 +460,7 @@ class SetupMatchViewController: UIViewController {
         }
     }
 
-    private func setupContestState() {
+    public func setupContestState() {
         [counterLabel, counterDetailLabel, battleBackground, battleVSLabel, battleUserImageView, workoutTag, battleOpponentImageView].forEach { $0.isHidden = true }
         [workoutCounterLabel, opponentNameLabel, contestHeaderBackground, contestOpponentScoreLabel, contestOpponentScoreCountLabel, contestWorkoutTag, contestOpponentImageView, contestMyScoreLabel, giveUpButton].forEach { $0.isHidden = false }
         view.addSubview(contestHeaderBackground)
@@ -411,7 +472,7 @@ class SetupMatchViewController: UIViewController {
         view.addSubview(contestMyScoreLabel)
         view.addSubview(workoutCounterLabel)
         view.addSubview(giveUpButton)
-        contestOpponentScoreCountLabel.text = "12"
+        contestOpponentScoreCountLabel.text = "0"
         contestWorkoutTag.setTitle("Pushup", for: .normal)
         NSLayoutConstraint.activate([
             contestHeaderBackground.topAnchor.constraint(equalTo: view.topAnchor),
@@ -452,22 +513,39 @@ class SetupMatchViewController: UIViewController {
             giveUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             giveUpButton.topAnchor.constraint(equalTo: workoutCounterLabel.bottomAnchor, constant: 150),
         ])
-        var counter = 0
-        workoutCounterLabel.text = "\(counter)"
 
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-            guard let strongSelf = self else { return }
-            counter += 1
-            strongSelf.workoutCounterLabel.text = "\(counter)"
+        workoutCounterLabel.text = "\(myCountValue)"
+        contestOpponentScoreCountLabel.text = "0"
+        contestWorkoutTag.setTitle(exercise.name(), for: .normal)
+        opponentNameLabel.text = opponent?.nickName
+        
+        contestOpponentImageView.image = UIImage(named: "person")
+        if let urlStr = opponent?.avatar_url, let url = URL(string: urlStr) {
+            contestOpponentImageView.sd_setImage(with: url)
+        }
+        
+        UIDevice.current.isProximityMonitoringEnabled = true
+        NotificationCenter.default.addObserver(self, selector: #selector(proximityStateChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
 
-            if counter == 8 {
-                timer.invalidate()
-                strongSelf.state = .result
+    }
+    var isScreenOff = false
+
+    @objc func proximityStateChange(center: NotificationCenter) {
+        if self.match != nil {
+            if isScreenOff {
+                myCountValue += 1
+                workoutCounterLabel.text = "\(myCountValue)"
+                MatchService.increaseValue(myId: String(currentUser.id), match: self.match!, value: myCountValue)
             }
+            isScreenOff = !isScreenOff
         }
     }
 
-    private func setupResultState() {
+    var myCountValue = 0
+    
+    public func setupResultState() {
+        UIDevice.current.isProximityMonitoringEnabled = false
+
         [workoutCounterLabel, opponentNameLabel, contestHeaderBackground, contestOpponentScoreLabel, contestOpponentScoreCountLabel, contestWorkoutTag, contestOpponentImageView, contestMyScoreLabel, giveUpButton].forEach { $0.isHidden = true }
         [closeBtn].forEach { $0.isHidden = false }
     }
