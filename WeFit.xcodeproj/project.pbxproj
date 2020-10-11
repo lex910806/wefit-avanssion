@@ -69,6 +69,9 @@
 		E9B0BE9425310D2D006E7821 /* SocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B0BE9325310D2D006E7821 /* SocialViewController.swift */; };
 		E9B3E430253294DF00979B90 /* CalorieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E42F253294DF00979B90 /* CalorieSearchViewController.swift */; };
 		E9B3E4332532955200979B90 /* CalorieSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E4322532955200979B90 /* CalorieSearchResult.swift */; };
+		E9B3E4362532ACAB00979B90 /* MyPageBMIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E4352532ACAB00979B90 /* MyPageBMIViewController.swift */; };
+		E9B3E4392532ACCF00979B90 /* MyPageBMIFacialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E4382532ACCF00979B90 /* MyPageBMIFacialViewController.swift */; };
+		E9B3E43C2532AD1500979B90 /* FacialBMIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B3E43B2532AD1500979B90 /* FacialBMIResult.swift */; };
 		E9B84369253005150015FD96 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B84368253005150015FD96 /* ChatViewController.swift */; };
 		E9B8436C253005610015FD96 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B8436B253005610015FD96 /* MessageCell.swift */; };
 		E9B8436F2530057E0015FD96 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B8436E2530057E0015FD96 /* MessageViewModel.swift */; };
@@ -164,6 +167,9 @@
 		E9B0BE9325310D2D006E7821 /* SocialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewController.swift; sourceTree = "<group>"; };
 		E9B3E42F253294DF00979B90 /* CalorieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieSearchViewController.swift; sourceTree = "<group>"; };
 		E9B3E4322532955200979B90 /* CalorieSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieSearchResult.swift; sourceTree = "<group>"; };
+		E9B3E4352532ACAB00979B90 /* MyPageBMIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBMIViewController.swift; sourceTree = "<group>"; };
+		E9B3E4382532ACCF00979B90 /* MyPageBMIFacialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBMIFacialViewController.swift; sourceTree = "<group>"; };
+		E9B3E43B2532AD1500979B90 /* FacialBMIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacialBMIResult.swift; sourceTree = "<group>"; };
 		E9B84368253005150015FD96 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E9B8436B253005610015FD96 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		E9B8436E2530057E0015FD96 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
@@ -395,6 +401,7 @@
 				E941E4D1253232E900B20B52 /* DuringMatch.swift */,
 				E9B8438325304D4D0015FD96 /* Match.swift */,
 				E9B3E4322532955200979B90 /* CalorieSearchResult.swift */,
+				E9B3E43B2532AD1500979B90 /* FacialBMIResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -464,6 +471,8 @@
 				E988C3762532816C000C39E9 /* MyPageBMICalculatorViewController.swift */,
 				E988C3772532816C000C39E9 /* BMIInputView.swift */,
 				E9B3E42F253294DF00979B90 /* CalorieSearchViewController.swift */,
+				E9B3E4352532ACAB00979B90 /* MyPageBMIViewController.swift */,
+				E9B3E4382532ACCF00979B90 /* MyPageBMIFacialViewController.swift */,
 			);
 			path = BMI;
 			sourceTree = "<group>";
@@ -660,6 +669,7 @@
 				FF9D59AE25319D950012C7F4 /* AnalysisController.swift in Sources */,
 				E9B8436C253005610015FD96 /* MessageCell.swift in Sources */,
 				FF9D59B125319DC10012C7F4 /* DailyActivityContainerCell.swift in Sources */,
+				E9B3E4362532ACAB00979B90 /* MyPageBMIViewController.swift in Sources */,
 				E956B40C252F48110068B094 /* BetterSnappingLayout.swift in Sources */,
 				E941E4CE2532162100B20B52 /* SelectFriendViewController.swift in Sources */,
 				FF9D59BB2531A7730012C7F4 /* AttendenceController.swift in Sources */,
@@ -698,6 +708,7 @@
 				E93EE9982530EEC4003A3226 /* BottomSheetView.swift in Sources */,
 				E9B8438425304D4D0015FD96 /* Match.swift in Sources */,
 				E956B3FD252F471A0068B094 /* MatchController.swift in Sources */,
+				E9B3E43C2532AD1500979B90 /* FacialBMIResult.swift in Sources */,
 				E9B0BE9425310D2D006E7821 /* SocialViewController.swift in Sources */,
 				E9594727252F5B6E0045EC86 /* Jwt.swift in Sources */,
 				E956B3CB252F44810068B094 /* AppDelegate.swift in Sources */,
@@ -705,6 +716,7 @@
 				E956B411252F484A0068B094 /* HorizontalSnappingController.swift in Sources */,
 				E96D802E2531B958000BCD10 /* SearchUser.swift in Sources */,
 				E9594719252F52BB0045EC86 /* GuideViewController.swift in Sources */,
+				E9B3E4392532ACCF00979B90 /* MyPageBMIFacialViewController.swift in Sources */,
 				E9594793252F85A90045EC86 /* ConversationCell.swift in Sources */,
 				E9594743252F5E0E0045EC86 /* Parameter.swift in Sources */,
 				E93EE99B2530EEC4003A3226 /* BottomSheetTransitioningDelegate.swift in Sources */,

@@ -47,6 +47,13 @@ struct MatchService {
     }
 
     static func matchRoomEnter(myId: String, match: Match, completion: @escaping(Bool, DuringMatch, Error?) -> Void) {
+        COLLECTION_MATCH.document(String(myId))
+            .collection("recent-match")
+            .whereField("matchId", in: [match.matchId])
+            .getDocuments { (snapshot, err) in
+                snapshot?.documents.forEach { $0.reference.delete() }
+            }
+            
         
         let query = COLLECTION_DURINGMATCH.document(match.matchId)
         query.addSnapshotListener { (snapshot, error) in

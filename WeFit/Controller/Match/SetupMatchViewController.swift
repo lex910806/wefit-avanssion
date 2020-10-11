@@ -222,9 +222,9 @@ class SetupMatchViewController: UIViewController {
     @objc func giveUpHandler() {
         if self.state == .contest {
             guard let match = match else { return }
-//            MatchService.leaveMatchRoom(myId: String(currentUser.id), match: match) { _ in
-//                self.state = .result
-//            }
+            MatchService.leaveMatchRoom(myId: String(currentUser.id), match: match) { _ in
+                self.state = .result
+            }
         }
     }
     
@@ -256,6 +256,7 @@ class SetupMatchViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .init(51, 51, 51)
         setupState(state)
+        NotificationCenter.default.addObserver(self, selector: #selector(proximityStateChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
     }
     
     @objc func closeVC() {
@@ -280,21 +281,30 @@ class SetupMatchViewController: UIViewController {
                         "matchId": matchId] as [String: Any]
             
             self.match = Match(data)
-            MatchService.matchRoomEnter(myId: String(self.currentUser.id), match: self.match!) { (canStart, duringInfo, err) in
-                if canStart {
-                    
-                    if self.state != .contest {
-                        self.state = .counter
-                    }
-                    self.workoutCounterLabel.text = "\(duringInfo.myValue)"
-                    self.contestOpponentScoreCountLabel.text = "\(duringInfo.opponentValue)"
-                } else {
-                    self.state = .result
-                }
-            }
+            self.matchRoomEnterence()
         }
     }
 
+    public func matchRoomEnterence() {
+        MatchService.matchRoomEnter(myId: String(self.currentUser.id), match: self.match!) { (canStart, duringInfo, err) in
+            if canStart {
+                
+                if self.state != .contest {
+                    self.state = .counter
+                }
+                if self.currentUser.id == self.match?.fromId {
+                    self.workoutCounterLabel.text = "\(duringInfo.myValue)"
+                    self.contestOpponentScoreCountLabel.text = "\(duringInfo.opponentValue)"
+                } else {
+                    self.workoutCounterLabel.text = "\(duringInfo.opponentValue)"
+                    self.contestOpponentScoreCountLabel.text = "\(duringInfo.myValue)"
+                }
+                
+            } else {
+                self.state = .result
+            }
+        }
+    }
     private func setupState(_ state: State) {
         switch state {
         case .initial:
@@ -348,12 +358,7 @@ class SetupMatchViewController: UIViewController {
         startMatchBtn.addTarget(self, action: #selector(onStartMatch), for: .touchUpInside)
     }
 
-    public func setupLoadingState() {
-        guard let opponentId = opponent?.id else {
-            setupState(.initial)
-            return
-        }
-        
+    public func setupLoadingState() {        
         [closeBtn, centerCard ,matchlabel, startMatchBtn].forEach { $0.isHidden = true }
         [workoutTag, battleBackground, battleVSLabel, battleOpponentImageView, battleUserImageView, loadingLabel].forEach { $0.isHidden = false }
         view.addSubview(loadingLabel)
@@ -525,8 +530,6 @@ class SetupMatchViewController: UIViewController {
         }
         
         UIDevice.current.isProximityMonitoringEnabled = true
-        NotificationCenter.default.addObserver(self, selector: #selector(proximityStateChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
-
     }
     var isScreenOff = false
 

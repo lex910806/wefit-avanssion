@@ -9,7 +9,7 @@ import AloeStackView
 import UIKit
 
 class MyPageController: UIViewController {
-
+    
     let stackView: AloeStackView = {
         let sv = AloeStackView()
         sv.translatesAutoresizingMaskIntoConstraints = false
@@ -18,10 +18,10 @@ class MyPageController: UIViewController {
         sv.hidesSeparatorsByDefault = true
         return sv
     }()
-
+    
     var levelView: MyPageLevelView!
     var actionsView: MyPageActionsView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(stackView)
@@ -33,29 +33,29 @@ class MyPageController: UIViewController {
         ])
         setupViews()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         [levelView.contentView, actionsView.bodyStep, actionsView.bmiCalculator, actionsView.settings]
             .forEach{ $0.addShadow(x: 0, y: 2, r: 6) }
     }
-
+    
     private func setupViews() {
         setupHeaderView()
         setupLevelView()
         setupActionsView()
     }
-
+    
     private func setupHeaderView() {
         let view = MyPageHeaderView()
         stackView.addRow(view)
     }
-
+    
     private func setupLevelView() {
         levelView = MyPageLevelView()
         stackView.addRow(levelView)
     }
-
+    
     private func setupActionsView() {
         actionsView = MyPageActionsView()
         let bodyGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onBodyState))
@@ -66,23 +66,27 @@ class MyPageController: UIViewController {
         actionsView.settings.addGestureRecognizer(settingsGestureRecognizer)
         stackView.addRow(actionsView)
     }
-
+    
     @objc
     private func onBodyState() {
         print("onBodyState")
     }
-
-    @objc
-    private func onBMICalculator() {
-        let bmiViewController = MyPageBMICalculatorViewController()
-        bmiViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(bmiViewController, animated: true)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
-
+    
     @objc
     private func onSettings() {
         let calorieSearchController = CalorieSearchViewController()
         calorieSearchController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(calorieSearchController, animated: true)
+    }
+    @objc
+    private func onBMICalculator() {
+        let bmiViewController = MyPageBMIViewController()
+        bmiViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(bmiViewController, animated: true)
     }
 }
