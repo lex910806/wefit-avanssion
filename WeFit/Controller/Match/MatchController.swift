@@ -85,7 +85,8 @@ class MatchController: BaseListController, UICollectionViewDelegateFlowLayout, M
     func fetchRecord() {
         guard let token = globalToken else { return }
         MatchService.queryResultList(token: token) { (res, err) in
-            print(res)
+            self.records = res?.statistics ?? []
+            self.collectionView.reloadData()
         }
     }
     

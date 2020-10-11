@@ -24,8 +24,9 @@ struct MatchService {
                 switch res.result {
                 case .success(let value):
                     completion(value, nil)
-                case .failure(let err)
-                }completion(nil, err)
+                case .failure(let err):
+                    completion(nil, err)
+                }
             }
             
     }
