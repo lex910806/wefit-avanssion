@@ -80,6 +80,13 @@ class MatchController: BaseListController, UICollectionViewDelegateFlowLayout, M
 ////        waitList.append(Match())
 //        records.append(testRecord)
         fetchMatches()
+        fetchRecord()
+    }
+    func fetchRecord() {
+        guard let token = globalToken else { return }
+        MatchService.queryResultList(token: token) { (res, err) in
+            print(res)
+        }
     }
     
     func fetchMatches() {

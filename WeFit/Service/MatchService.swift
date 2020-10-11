@@ -6,9 +6,29 @@
 //
 
 import Firebase
+import Alamofire
+import SwiftyJSON
 
 struct MatchService {
-    
+    struct Statistics: Decodable {
+        var statistics: [Record]
+    }
+    static func queryResultList(token: String, completion: @escaping (Statistics?, Error?) -> Void) {
+        guard let id = Jwt.decode(token)["id"] as? Int else { return }
+        let url = URL(string: "http://20.188.108.21/api/v1/match/\(id)")!
+        
+        AF.request(url,
+                   headers: HTTPHeaders([HTTPHeader.init(name: "access-token", value: token)]))
+            .responseDecodable (of: Statistics.self) { res in
+                
+                switch res.result {
+                case .success(let value):
+                    completion(value, nil)
+                case .failure(let err)
+                }completion(nil, err)
+            }
+            
+    }
     static func fetchAllUsers(completion: @escaping([User]) -> Void){
         COLLECTION_MATCH.getDocuments { (snapshot, error) in
             var users = [User]()
