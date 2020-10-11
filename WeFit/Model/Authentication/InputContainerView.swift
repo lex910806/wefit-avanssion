@@ -21,7 +21,7 @@ class InputContainerView: UIView {
                           trailing: trailingAnchor)
 
         let dividerView = UIView()
-        dividerView.backgroundColor = .black
+        dividerView.backgroundColor = UIColor.init(189, 189, 189)
         addSubview(dividerView)
         dividerView.anchor(top:nil,
                            leading: leadingAnchor,

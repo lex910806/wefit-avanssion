@@ -18,7 +18,7 @@ class RegisterViewController: UIViewController {
     private let plusPhtoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "plus_photo"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = UIColor.init(130, 130, 130)
         button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         button.imageView?.clipsToBounds = true
         button.clipsToBounds = true
@@ -38,7 +38,7 @@ class RegisterViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray
+        label.backgroundColor = UIColor.init(130, 130, 130)
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.text = "Enter your account details"
         return label
@@ -47,11 +47,11 @@ class RegisterViewController: UIViewController {
     private let signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 10
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.backgroundColor = .darkGray
+        button.backgroundColor = UIColor.init(246, 29, 68)
         button.setTitleColor(.white, for: .normal)
-        button.constrainHeight(constant: 45)
+        button.constrainHeight(constant: 60)
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleRegistration), for: .touchUpInside)
         return button
@@ -187,14 +187,17 @@ class RegisterViewController: UIViewController {
         plusPhtoButton.centerXInSuperview()
         plusPhtoButton.anchor(top: backButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil,
                               padding: .init(top: 50, left: 0, bottom: 0, right: 0),
-                              size: .init(width: 200, height: 200))
+                              size: .init(width: 86, height: 86))
         
         
         let stack = UIStackView(arrangedSubviews: [InputContainerView(textField: emailTextField),
                                                    InputContainerView(textField: userNameTextField),
                                                    InputContainerView(textField: fullNameTextField),
                                                    InputContainerView(textField: passwordTextField),
-                                                   signUpButton])
+                                                   ])
+        
+        
+        
         stack.axis = .vertical
         stack.spacing = 16
         view.addSubview(stack)
@@ -204,7 +207,12 @@ class RegisterViewController: UIViewController {
                      trailing: view.trailingAnchor,
                      padding: .init(top: 32, left: 32, bottom: 0, right: 32))
 
-
+        view.addSubview(signUpButton)
+        signUpButton.anchor(top: stack.bottomAnchor,
+                            leading: view.leadingAnchor,
+                            bottom: nil,
+                            trailing: view.trailingAnchor,
+                            padding: .init(top: 48, left: 32, bottom: 0, right: 32))
         
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.anchor(top: nil,
@@ -238,7 +246,7 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
         plusPhtoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         plusPhtoButton.layer.borderColor = UIColor.white.cgColor
         plusPhtoButton.layer.borderWidth = 3.0
-        plusPhtoButton.layer.cornerRadius = 200 / 2
+        plusPhtoButton.layer.cornerRadius = 86 / 2
         
         dismiss(animated: true, completion: nil)
     }
@@ -249,10 +257,10 @@ extension RegisterViewController: AuthenticationControllerProtocol{
         let formIsValid = viewModel.valid()
         if formIsValid {
             signUpButton.isEnabled = true
-            signUpButton.backgroundColor = .black
+            signUpButton.backgroundColor = UIColor.init(246, 29, 68)
         } else {
             signUpButton.isEnabled = false
-            signUpButton.backgroundColor = .darkGray
+            signUpButton.backgroundColor = UIColor.init(246, 29, 68)
         }
     }
 }

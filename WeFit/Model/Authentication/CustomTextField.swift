@@ -16,7 +16,7 @@ class CustomTextField: UITextField {
         font = UIFont.boldSystemFont(ofSize: 16)
         textColor = .black
         keyboardAppearance = .dark
-        attributedPlaceholder = NSAttributedString(string: placeholer, attributes: [.foregroundColor : UIColor.lightGray])
+        attributedPlaceholder = NSAttributedString(string: placeholer, attributes: [.foregroundColor : UIColor.darkGray])
     }
     
     required init?(coder: NSCoder) {

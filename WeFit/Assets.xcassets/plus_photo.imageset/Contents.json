@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "Group 113.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "plus_photo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

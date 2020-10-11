@@ -27,8 +27,8 @@ class LoginViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        label.backgroundColor = .white
+        label.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
         label.text = "Let’s start"
         return label
     }()
@@ -37,11 +37,11 @@ class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Log in", for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 10
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.backgroundColor = .darkGray
+        button.backgroundColor = UIColor.init(246, 29, 68)
         button.setTitleColor(.white, for: .normal)
-        button.constrainHeight(constant: 50)
+        button.constrainHeight(constant: 60)
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
@@ -207,10 +207,10 @@ extension LoginViewController: AuthenticationControllerProtocol{
         let formIsValid = viewModel.valid()
         if formIsValid {
             loginButton.isEnabled = true
-            loginButton.backgroundColor = .black
+            loginButton.backgroundColor = UIColor.init(246, 29, 68)
         } else {
             loginButton.isEnabled = false
-            loginButton.backgroundColor = .darkGray
+            loginButton.backgroundColor = UIColor.init(246, 29, 68)
         }
     }
 }
