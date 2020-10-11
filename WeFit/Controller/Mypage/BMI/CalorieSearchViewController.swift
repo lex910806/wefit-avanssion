@@ -14,7 +14,7 @@ class CalorieSearchViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Calorie Search"
+        title = "Calories Checker"
         setupSearchController()
         setupTableView()
     }

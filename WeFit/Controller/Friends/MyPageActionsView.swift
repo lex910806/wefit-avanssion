@@ -42,7 +42,7 @@ class MyPageActionsView: UIView {
 
         bodyStep.configure(icon: "ic_body_state", text: "Body State")
         bmiCalculator.configure(icon: "ic_bmi_calculator", text: "BMI Calculator")
-        settings.configure(icon: "ic_settings", text: "Settings")
+        settings.configure(icon: "ion_fast-food", text: "Calories Checker")
     }
 
     required init?(coder: NSCoder) {

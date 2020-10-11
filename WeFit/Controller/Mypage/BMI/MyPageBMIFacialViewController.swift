@@ -106,9 +106,11 @@ class MyPageBMIFacialViewController: UIViewController {
             return
         }
 
+        
+        //639f0dd5b7msh13a860ab505cb15p16ecf7jsn660b908d4ffb
         let headers = HTTPHeaders([
             "x-rapidapi-host": "facial-bmi.p.rapidapi.com",
-            "x-rapidapi-key": "32fa0b2208mshf5f0a458abd503cp1f2368jsnf3a9dca45949",
+            "x-rapidapi-key": "",
             "content-type": "multipart/form-data"
         ])
 
